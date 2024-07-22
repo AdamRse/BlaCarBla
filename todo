@@ -1,0 +1,2 @@
+modifier canAccessPanel() une fois les tests ok pour dépendre du role et pas de l'adresse email
+    app/Models/User.php
