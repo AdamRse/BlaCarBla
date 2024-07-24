@@ -67,9 +67,13 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(roles $roles)//Pour se log
+    public function show($id)//Pour se log
     {
-        //
+        $user = User::find($id);
+        if($user)
+            return response()->json($user, 200);
+
+        return response()->json(["error" => "Missing user"], 404);
     }
 
     /**
@@ -83,16 +87,45 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, roles $roles)
+    public function update($id, Request $request)
     {
-        //
+        $user = User::find($id);
+        if (!$user)
+            return response()->json(['error' => 'Missing user'], 404);
+
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'nullable|string|max:255',
+            'lastname' => 'nullable|string|max:255',
+            'role_id' => 'nullable|exists:roles,id|not_in:3',
+            'email' => 'nullable|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:3|confirmed',
+            'password_confirmation' => 'nullable|required_with:password|string|min:3',
+            'avatar' => 'nullable|string',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $user->update($request->only([
+            'firstname',
+            'lastname',
+            'role_id',
+            'email',
+            'avatar',
+        ]));
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+            $user->save();
+        }
+        return response()->json($user, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(roles $roles)
+    public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        if (!$user)
+            return response()->json(['error' => 'Missing user'], 404);
+
+        $user->delete();
+        return response()->json(['confirm' => 'User deleted'], 200);
     }
 }
