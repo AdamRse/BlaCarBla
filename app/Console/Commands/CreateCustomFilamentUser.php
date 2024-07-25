@@ -14,7 +14,7 @@ class CreateCustomFilamentUser extends Command
      * @var string
      */
     protected $signature = 'app:create-custom-filament-user';
-
+ 
     /**
      * The console command description.
      *
@@ -41,7 +41,7 @@ class CreateCustomFilamentUser extends Command
             // Ajoutez ici les autres champs
         ]);
 
-        $user->assignRole('admin'); // Assurez-vous d'utiliser le bon rôle
+        $user->assignRole(1); // Assurez-vous d'utiliser le bon rôle
 
         $this->info('Admin user created successfully.');
     }

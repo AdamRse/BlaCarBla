@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Filament\Models\Contracts\HasName;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements HasName
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -56,4 +57,12 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
+    public function assignRole($id_role){
+        $this->role_id = $id_role;
+    }
+
+    public function getFilamentName(): string
+    {
+        return $this->getAttributeValue('firstname');
+    }
 }
