@@ -27,15 +27,28 @@ return new class extends Migration
         });
         //Mon user par défaut
         DB::table('users')->insert([
-            'firstname' => 'Adam',
-            'lastname' => 'Rousselle',
-            'role_id' => 1, // Assurez-vous que le rôle avec ID 1 existe
-            'email' => 'adamrse@gmail.com',
-            'password' => Hash::make('adam'), // Utilisez Hash::make pour hacher le mot de passe
-            'email_verified_at' => now(),
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+            [
+                'firstname' => 'Adam',
+                'lastname' => 'Rousselle',
+                'role_id' => 1,
+                'email' => 'adamrse@gmail.com',
+                'password' => Hash::make('adam'),
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+            ,[
+                'firstname' => 'Stéphanovitch',
+                'lastname' => 'Muros',
+                'role_id' => 3,
+                'email' => 'stephanovitch@gmail.com',
+                'password' => Hash::make('stephane'),
+                'email_verified_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        ],
+        );
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
