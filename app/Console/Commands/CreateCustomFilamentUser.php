@@ -41,7 +41,7 @@ class CreateCustomFilamentUser extends Command
             // Ajoutez ici les autres champs
         ]);
 
-        $user->assignRole(1); // Assurez-vous d'utiliser le bon rôle
+        //$user->assignRole(1);
 
         $this->info('Admin user created successfully.');
     }
