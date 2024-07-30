@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function create(Request $request)//créé un nouvel utilisateur
     {
-         $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'role_id' => 'required|exists:roles,id|not_in:1',//1 est le status d'admin
@@ -125,6 +125,10 @@ class UserController extends Controller
         if (!$user)
             return response()->json(['error' => 'Missing user'], 404);
 
+        $authUser = auth()->user();
+        if ($authUser->id != $id && $authUser->role_id !== 1)
+            return response()->json(['error' => 'Unauthorized action : user '.$authUser->id.' (role '.$authUser->role_id.') can\'t delete user '.$user->id], 403);
+        
         $user->delete();
         return response()->json(['confirm' => 'User deleted'], 200);
     }

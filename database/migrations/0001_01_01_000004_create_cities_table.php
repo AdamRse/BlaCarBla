@@ -20,10 +20,24 @@ return new class extends Migration
         });
         //Ajouter une faleur par défaut à la migration
         DB::table('cities')->insert([
-            'city' => 'roanne',
-            'pc' => '42300',
-            'created_at' => now(),
-            'updated_at' => now()
+            [
+                'city' => 'roanne',
+                'pc' => '42300',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+            ,[
+                'city' => 'lyon',
+                'pc' => '69001',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+            ,[
+                'city' => 'ranchal',
+                'pc' => '69470',
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
         ]);
     }
 

@@ -10,6 +10,9 @@ class journey extends Model
 {
     use HasFactory, HasApiTokens;
     protected $fillable = [
+        'driver',
+        'departure',
+        'arrival',
         'addr_departure',
         'addr_arrival',
         'time_departure',
