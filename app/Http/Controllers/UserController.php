@@ -7,6 +7,7 @@ use App\Models\roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -16,6 +17,7 @@ class UserController extends Controller
     public function index()//affiche tous les utilisateurs
     {
         $users = User::all();
+        Log::info('Alerte générale, quelqu\'un consulte la liste des users !!!!!!!.', ['user_id' => auth()->user()->id]);//Ajouter un log telescope
         return response()->json($users);
     }
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\cities;
 use App\Models\journey;
+use DateTime;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -58,12 +60,49 @@ class JourneyController extends Controller
     public function search(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'start' => 'required|exists:cities,id'
-            ,'end' => 'required|exists:cities,id'
-            ,'date' => 'required|date_format:Y-m-d H:i:s|after:now'
+            'start' => 'nullable|exists:cities,id'
+            ,'end' => 'nullable|exists:cities,id'
+            ,'date' => 'nullable|date_format:Y-m-d H:i:s|after:now'
         ]);
         if($validator->fails())
             return response()->json(['errors' => $validator->errors()], 422);
+        $date = ($request->has('date')) ? $request->date : date("Y-m-d H:i:s");
+
+        $query = journey::query();
+
+        if ($request->has('start')){
+            $city_start_id = cities::where('city', $request->start)->pluck('id')->first();
+            if(!empty($city_start_id))
+                $query->where('departure', $city_start_id);
+        }
+        if ($request->has('end')){
+            $city_end_id = cities::where('city', $request->end)->pluck('id')->first();
+            if(!empty($city_end_id))
+                $query->where('arrival', $city_end_id);
+        }
+        //CODER LA SUITE
+        if($request->has('date'))
+            $date = journey::where('city', $request->end)->pluck('id')->first();
+
+        
+        //$query->where('starting_point', 'like', '%' . $request->start . '%');
+        //$city = City::where('city', $cityName)->first();
+
+        
+        // $query = journey::query();
+        // if ($request->has('start')) {
+        //     $query->where('starting_point', 'like', '%' . $request->start . '%');
+        // }
+
+        // if ($request->has('end')) {
+        //     $query->where('ending_point', 'like', '%' . $request->end . '%');
+        // }
+
+        // if ($request->has('date')) {
+        //     $query->whereDate('starting_at', $request->date);
+        }
+
+        return response()->json($query->get(), 201);
     }
 
     /**

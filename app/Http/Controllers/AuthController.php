@@ -16,7 +16,7 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
             Log::info('Un utilisateur s\'est connecté.', ['user_id' => auth()->user()->id]);//Ajouter un log telescope
