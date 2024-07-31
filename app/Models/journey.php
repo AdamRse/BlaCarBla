@@ -20,10 +20,15 @@ class journey extends Model
         'seats',
     ];
 
-    public function cities(){
-        return $this->hasMany(cities::class);
+    public function driver(){
+        return $this->belongsTo(User::class, 'driver');
     }
-    public function users(){
-        return $this->hasMany(User::class);
+
+    public function departure(){
+        return $this->belongsTo(cities::class, 'departure');
+    }
+
+    public function arrival(){
+        return $this->belongsTo(cities::class, 'arrival');
     }
 }

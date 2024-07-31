@@ -18,11 +18,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
     Route::post('/logout', [UserController::class, 'index']);
 
+    Route::get('/trips/{start}/{end}/{date}', [JourneyController::class, 'search']);
+
     Route::get('/trips', [JourneyController::class, 'index']);
     Route::post('/trips', [JourneyController::class, 'create']);
     Route::get('/trips/{id}', [JourneyController::class, 'show']);
     Route::put('/trips/{id}', [JourneyController::class, 'update']);
     Route::delete('/trips/{id}', [JourneyController::class, 'destroy']);
-
-    Route::get('/trips?start={start}&end={end}&date={date}', [JourneyController::class, 'index']);
+    
 });
+
