@@ -81,6 +81,7 @@ class JourneyController extends Controller
                 $query->where('arrival', $city_end_id);
         }
         //CODER LA SUITE
+        
         if($request->has('date'))
             $date = journey::where('city', $request->end)->pluck('id')->first();
 
