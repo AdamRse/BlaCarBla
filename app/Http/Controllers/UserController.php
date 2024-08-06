@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()//affiche tous les utilisateurs
     {
         $users = User::all();
-        Log::info('Alerte générale, quelqu\'un consulte la liste des users !!!!!!!.', ['user_id' => auth()->user()->id]);//Ajouter un log telescope
+        Log::info('Alerte générale, quelqu\'un consulte la liste des users !!!!!!!.');//Ajouter un log telescope
         return response()->json($users);
     }
 
