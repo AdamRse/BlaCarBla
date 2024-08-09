@@ -19,8 +19,8 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
-            Log::info('Un utilisateur s\'est connecté.', ['user_id' => auth()->user()->id]);//Ajouter un log telescope
-            return response()->json(['access_token' => $token, 'token_type' => 'Bearer']);
+            Log::info('Un utilisateur s\'est connecté.');//Ajouter un log telescope
+            return response()->json(['user' => $user, 'access_token' => $token, 'token_type' => 'Bearer']);
         } else {
             return response()->json(['message' => 'Invalid login details'], 401);
         }
